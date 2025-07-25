@@ -108,12 +108,11 @@ Center the narrative on the history, dynamically selecting an appropriate verb (
       <h1 className="h1">
         QuestRex <span className="h1__sub">Backstoryr</span>
       </h1>
+      <p className="backstoryr-introduction">
+        Who the heck is your character? Tweak the options below for an
+        AI-generated backstory.
+      </p>
       <div className="backstoryr-content">
-        <p className="introduction">
-          Who the heck is your character? Tweak the options below for an
-          AI-generated backstory.
-        </p>
-
         {error && <ErrorAlert message={error} onClose={() => setError(null)} />}
 
         <div className="group-selects">

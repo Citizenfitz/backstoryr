@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "./static/css/main.e4de041c.css",
+    "main.js": "./static/js/main.39028a08.js",
+    "static/media/fontawesome-webfont.ttf": "./static/media/fontawesome-webfont.f0af1680f082547a7aae.ttf",
+    "static/media/Edelgotisch.ttf": "./static/media/Edelgotisch.4937baebd8e8877a9a86.ttf",
+    "index.html": "./index.html"
+  },
+  "entrypoints": [
+    "static/css/main.e4de041c.css",
+    "static/js/main.39028a08.js"
+  ]
+}

@@ -1,28 +1,14 @@
 // Import Font Awesome outside the scope since it's a global CDN resource
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css");
+// Import Cabin and Kaushan Script from Google Fonts
+@import url("https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap");
 
 // ********************* PATHS *********************
 $path-font: "../assets/fonts/";
 $path-img: "../assets/images/";
 
 /***************************** FONT IMPORTS ************************************* */
-@font-face {
-  font-family: "cabin-regular";
-  src: url($path-font + "Cabin/Cabin-Regular.ttf") format("truetype");
-}
-@font-face {
-  font-family: "cabin-medium";
-  src: url($path-font + "Cabin/Cabin-Medium.ttf") format("truetype");
-}
-@font-face {
-  font-family: "cabin-semibold";
-  src: url($path-font + "Cabin/Cabin-SemiBold.ttf") format("truetype");
-}
-@font-face {
-  font-family: "cabin-bold";
-  src: url($path-font + "Cabin/Cabin-Bold.ttf") format("truetype");
-}
-
 @font-face {
   font-family: "FontAwesome";
   src: url($path-font + "FontAwesome/fontawesome-webfont.ttf")
@@ -96,6 +82,7 @@ $font-primary: "Cabin", sans-serif;
 $font-icon: "FontAwesome";
 $font-header: "Edelgotisch";
 $font-forms: "Cabin", sans-serif;
+$font-cursive: "Kaushan Script", cursive;
 
 $font-size-base: 16px;
 $font-size-xs: 12px;
@@ -296,7 +283,7 @@ $page-max: 1600px;
   }
 
   .backstoryr-app-container {
-    max-width: 800px;
+    max-width: 740px;
     margin: 0 auto;
     position: relative;
     font-family: $font-primary;
@@ -391,6 +378,20 @@ $page-max: 1600px;
     }
   }
 
+  .backstoryr-introduction {
+    font-size: $font-size-lg;
+    margin-bottom: $spacing-sm;
+    text-align: center;
+    color: $color-bg-dark;
+    font-family: $font-cursive;
+    font-weight: 300;
+    font-style: normal;
+    margin-top: 0;
+    background: $color-accent;
+    padding: $spacing-sm;
+    border-bottom: 1px solid $color-border;
+  }
+
   .backstoryr-content {
     padding: $spacing-md;
   }
@@ -431,7 +432,7 @@ $page-max: 1600px;
       align-items: center;
       gap: $spacing-xs;
       margin-bottom: $spacing-xs;
-      margin-right: $spacing-sm;
+      margin-right: $spacing-xs;
     }
   }
 
@@ -455,8 +456,9 @@ $page-max: 1600px;
     }
     &__placeholder-text {
       color: $color-text-muted;
+      font-family: $font-cursive;
       font-style: italic;
-      opacity: 0.5;
+      opacity: 0.6;
       font-size: $font-size-xl;
       text-align: center;
       margin: 0 auto;

@@ -2,6 +2,7 @@
   "name": "questrex-backstoryr",
   "version": "0.1.0",
   "private": true,
+  "homepage": "./",
   "dependencies": {
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
@@ -10,6 +11,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build:plugin": "PUBLIC_URL=. GENERATE_SOURCEMAP=false react-scripts build && rm -rf wp-plugin/questrex-backstoryr/assets/build && cp -r build wp-plugin/questrex-backstoryr/assets/",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
