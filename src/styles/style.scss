@@ -1,0 +1,465 @@
+// Import Font Awesome outside the scope since it's a global CDN resource
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css");
+
+// ********************* PATHS *********************
+$path-font: "../assets/fonts/";
+$path-img: "../assets/images/";
+
+/***************************** FONT IMPORTS ************************************* */
+@font-face {
+  font-family: "cabin-regular";
+  src: url($path-font + "Cabin/Cabin-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "cabin-medium";
+  src: url($path-font + "Cabin/Cabin-Medium.ttf") format("truetype");
+}
+@font-face {
+  font-family: "cabin-semibold";
+  src: url($path-font + "Cabin/Cabin-SemiBold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "cabin-bold";
+  src: url($path-font + "Cabin/Cabin-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "FontAwesome";
+  src: url($path-font + "FontAwesome/fontawesome-webfont.ttf")
+    format("truetype");
+}
+
+@font-face {
+  font-family: "Edelgotisch";
+  src: url($path-font + "Edelgotisch/Edelgotisch.ttf") format("truetype");
+}
+
+// *********************** COLORS ***********************//
+
+$color-bg: #ffffff;
+$color-bg-alt: #f5e6cc;
+$color-bg-dark: #5a2780;
+
+$color-accent: #f7ebc7;
+$color-accent-dark: #c78d17;
+
+$color-cta: #d7ac28;
+$color-cta-hover: #c78d17;
+$color-link-hover: #f7ebc7;
+
+// Text Colors
+$color-text: #333333;
+$color-text-light: #ffffff;
+$color-text-muted: #666666;
+$color-text-cta: #1a1a1a;
+
+// UI Colors
+$color-border: #5a2780;
+$color-input-bg: #f5f3ed;
+$color-zebra: #f7f4f9;
+$color-headers: $color-bg-dark;
+$color-white: white;
+$color-black: black;
+
+// Game-Specific Colors
+$color-common: #d2691e;
+$color-fighter: #04a54f;
+$color-priest: #2375b9;
+$color-wizard: #e1a525;
+$color-rogue: #eb2026;
+
+// ********************* SPACING *********************
+$spacing-xxs: 0.25rem;
+$spacing-xs: 0.5rem;
+$spacing-sm: 1rem;
+$spacing-sm-alt: 1.5rem;
+$spacing-md: 2rem;
+$spacing-lg: 4rem;
+$spacing-xl: 6rem;
+$spacing-xxl: 8rem;
+
+// repeated for mixins
+$spacing-sizes: (
+  none: 0,
+  xxs: 0.25rem,
+  xs: 0.5rem,
+  sm: 1rem,
+  sm-alt: 1.5rem,
+  md: 2rem,
+  lg: 4rem,
+  xl: 6rem,
+  xxl: 8rem,
+);
+
+// ********************* TYPOGRAPHY *********************
+$font-primary: "Cabin", sans-serif;
+$font-icon: "FontAwesome";
+$font-header: "Edelgotisch";
+$font-forms: "Cabin", sans-serif;
+
+$font-size-base: 16px;
+$font-size-xs: 12px;
+$font-size-sm: 14px;
+$font-size-md: 18px;
+$font-size-lg: 20px;
+$font-size-xl: 24px;
+$font-size-xxl: 32px;
+$font-size-xxxl: 48px;
+$font-size-xxxxl: 60px;
+$line-height-base: 1.4;
+
+// ********************* FORM ELEMENTS *********************
+$form-element-height: 1.5rem;
+$border-radius-standard: 4px;
+$border-radius-lg: 8px;
+$form-element-border: 1px solid $color-border;
+
+// ********************* BREAKPOINTS *********************
+$mq-phone-max: 767px;
+$mq-tablet-max: 1023px;
+$mq-desktop-max: 1439px;
+$page-max: 1600px;
+
+// ******************** MIXINS ***************************//
+
+// Media Queries
+@mixin mq-phone {
+  @media (max-width: #{$mq-phone-max}) {
+    @content;
+  }
+}
+
+@mixin mq-tablet {
+  @media (min-width: #{$mq-phone-max + 1}) and (max-width: #{$mq-tablet-max}) {
+    @content;
+  }
+}
+
+@mixin mq-tablet-down {
+  @media (max-width: #{$mq-tablet-max}) {
+    @content;
+  }
+}
+
+@mixin mq-tablet-up {
+  @media (min-width: #{$mq-tablet-max + 1}) {
+    @content;
+  }
+}
+
+@mixin mq-desktop {
+  @media (min-width: #{$mq-tablet-max + 1}) and (max-width: #{$mq-desktop-max}) {
+    @content;
+  }
+}
+
+@mixin mq-desktop-large {
+  @media (min-width: #{$mq-desktop-max + 1}) {
+    @content;
+  }
+}
+
+@mixin headerfont {
+  font-family: $font-header;
+  font-weight: normal;
+  line-height: 1.2;
+  color: $color-headers;
+}
+
+// Form stuff
+
+@mixin placeholder {
+  color: $color-text-muted;
+  font-style: italic;
+}
+
+@mixin input-basics {
+  border-radius: $border-radius-standard;
+  border: $form-element-border;
+  padding: $spacing-xs;
+  background-color: $color-bg;
+  flex: auto;
+  width: 100%;
+  &:active {
+    color: $color-bg;
+    border-color: $color-bg;
+  }
+  &:focus {
+    background-color: $color-accent;
+  }
+  &:disabled {
+    opacity: 0.5;
+  }
+}
+
+@mixin generate-margin-utilities {
+  $directions: (top, bottom, left, right);
+  $sizes: (none, xxs, xs, sm, sm-alt, md, lg, xl, xxl);
+
+  @each $dir in $directions {
+    @each $size in $sizes {
+      .ut-margin-#{$dir}-#{$size} {
+        margin-#{$dir}: map-get($spacing-sizes, $size);
+      }
+    }
+  }
+}
+
+// Wrap all component styles under the app ID
+#questrex-backstoryr-root {
+  position: relative;
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba($color-bg-dark, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    border-radius: $border-radius-lg;
+    animation: fadeIn 0.3s ease-in;
+
+    &__content {
+      text-align: center;
+      color: $color-text-light;
+      font-family: $font-header;
+      font-size: $font-size-lg;
+
+      .fa-spinner {
+        display: block;
+        font-size: $font-size-xxxl;
+        margin-bottom: $spacing-sm;
+        animation: spin 1s linear infinite;
+      }
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes flashContent {
+    0% {
+      background-color: $color-bg;
+    }
+    10% {
+      background-color: $color-cta;
+    }
+    100% {
+      background-color: $color-bg;
+    }
+  }
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  // *********************** BASE ELEMENTS ***********************//
+  /* Typography Base */
+  *,
+  *:before,
+  *:after {
+    box-sizing: border-box;
+  }
+
+  a {
+    color: $color-text;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  @mixin root-styles {
+    @include base-styles;
+  }
+  // layout
+  .main {
+    flex: 1;
+    padding: 20px;
+  }
+
+  .backstoryr-app-container {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    font-family: $font-primary;
+    font-size: $font-size-base;
+    line-height: $line-height-base;
+    color: $color-text;
+  }
+
+  .backstoryr-container {
+    background: $color-zebra;
+    padding: 0;
+    border-radius: $border-radius-lg;
+    border: 1px solid $color-border;
+  }
+
+  .h1 {
+    @include headerfont;
+    text-align: center;
+    font-size: $font-size-xxl;
+    margin: 0;
+    background-color: $color-bg-dark;
+    color: $color-text-light;
+    padding: $spacing-xs;
+    border-radius: $border-radius-lg $border-radius-lg 0 0;
+    &__sub {
+      color: $color-accent;
+    }
+  }
+
+  .h2 {
+    @include headerfont;
+    font-size: $font-size-lg;
+    margin-bottom: $spacing-xs;
+    margin-top: 0;
+  }
+
+  .label {
+    font-size: $font-size-lg;
+    margin-bottom: $spacing-xxs;
+    font-family: $font-header;
+    display: inline-block;
+    font-weight: bold;
+    color: $color-bg-dark;
+  }
+
+  // inputs and editable text
+  select,
+  input,
+  .editable-text {
+    @include input-basics;
+  }
+
+  .editable-text {
+    width: auto;
+    min-width: 150px;
+    cursor: text;
+    height: 40px;
+  }
+
+  // buttons
+  .btn {
+    padding: $spacing-xs $spacing-sm;
+    font-size: $font-size-sm;
+    font-weight: 700;
+    border: $form-element-border;
+    color: $color-headers;
+    border-radius: $border-radius-standard;
+    background-color: $color-accent;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    transition: background 0.3s ease;
+
+    &:hover {
+      background: radial-gradient(
+        circle at center,
+        #ebc23d 0%,
+        $color-cta-hover 100%
+      );
+      color: $color-text-cta;
+      text-decoration: none;
+    }
+
+    &__regenerate {
+      height: 40px;
+      line-height: 40px;
+      padding: 0 $spacing-sm;
+    }
+    &__generate {
+      height: auto;
+      text-transform: uppercase;
+    }
+  }
+
+  .backstoryr-content {
+    padding: $spacing-md;
+  }
+
+  // groups
+  // this si the 4 select lists
+  .group-selects {
+    margin-bottom: $spacing-sm;
+    display: flex;
+    gap: $spacing-sm;
+    &__form {
+      margin-bottom: $spacing-sm;
+    }
+    @include mq-phone {
+      flex-direction: column;
+      gap: 0;
+    }
+  }
+
+  // this is the three text-ish imputs
+  .group-inputs {
+    &__form {
+      margin-bottom: $spacing-md;
+      &--generate {
+        text-align: center;
+      }
+    }
+    &__grid {
+      display: flex;
+      flex-direction: row;
+      gap: $spacing-sm;
+      @include mq-tablet-down {
+        flex-direction: column;
+      }
+    }
+    &__form-item {
+      display: flex;
+      align-items: center;
+      gap: $spacing-xs;
+      margin-bottom: $spacing-xs;
+      margin-right: $spacing-sm;
+    }
+  }
+
+  .generated-backstory {
+    padding: $spacing-md;
+    background: $color-bg;
+    border-radius: $border-radius-standard;
+    border: 1px solid $color-border;
+    &__content {
+      line-height: 1.8;
+      font-size: $font-size-md;
+      color: $color-text;
+      min-height: 100px;
+      padding: $spacing-sm;
+      border-radius: $border-radius-standard;
+      transition: background-color 0.3s ease;
+
+      &--populated {
+        animation: flashContent 1.5s ease-out;
+      }
+    }
+    &__placeholder-text {
+      color: $color-text-muted;
+      font-style: italic;
+      opacity: 0.5;
+      font-size: $font-size-xl;
+      text-align: center;
+      margin: 0 auto;
+    }
+  }
+}
