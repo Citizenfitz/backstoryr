@@ -279,6 +279,7 @@ function questrex_backstoryr_generate_backstory() {
             'Authorization' => 'Bearer ' . $api_key,
             'Content-Type' => 'application/json',
         ),
+        'timeout' => 30, // Increase timeout to 30 seconds
         'body' => json_encode(array(
             'model' => 'grok-3-latest',
             'messages' => array(
