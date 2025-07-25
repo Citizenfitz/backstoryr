@@ -250,6 +250,78 @@ function questrex_backstoryr_shortcode() {
 }
 
 /**
+ * Handle the backstory generation AJAX request
+ */
+function questrex_backstoryr_generate_backstory() {
+    // Verify nonce
+    if (!check_ajax_referer('questrex-backstoryr-nonce', 'nonce', false)) {
+        wp_send_json_error('Invalid security token');
+        wp_die();
+    }
+
+    // Get the prompt from the request
+    $prompt = sanitize_text_field($_POST['prompt']);
+    if (empty($prompt)) {
+        wp_send_json_error('No prompt provided');
+        wp_die();
+    }
+
+    // Get the API key
+    $api_key = questrex_backstoryr_get_api_key();
+    if (empty($api_key)) {
+        wp_send_json_error('API key not configured');
+        wp_die();
+    }
+
+    // Make the request to xAI API
+    $response = wp_remote_post('https://api.x.ai/v1/chat/completions', array(
+        'headers' => array(
+            'Authorization' => 'Bearer ' . $api_key,
+            'Content-Type' => 'application/json',
+        ),
+        'body' => json_encode(array(
+            'model' => 'grok-3-latest',
+            'messages' => array(
+                array(
+                    'role' => 'system',
+                    'content' => 'You are a creative writing assistant specializing in fantasy RPG character backstories.'
+                ),
+                array(
+                    'role' => 'user',
+                    'content' => $prompt
+                )
+            ),
+            'max_tokens' => 150,
+            'temperature' => 0.7
+        ))
+    ));
+
+    // Check for errors
+    if (is_wp_error($response)) {
+        wp_send_json_error('Failed to connect to API: ' . $response->get_error_message());
+        wp_die();
+    }
+
+    $body = json_decode(wp_remote_retrieve_body($response), true);
+    $status_code = wp_remote_retrieve_response_code($response);
+
+    if ($status_code !== 200) {
+        $error_message = 'API Error';
+        if (isset($body['error']['message'])) {
+            $error_message = $body['error']['message'];
+        }
+        wp_send_json_error($error_message);
+        wp_die();
+    }
+
+    // Return the response
+    wp_send_json_success(array(
+        'backstory' => $body['choices'][0]['message']['content']
+    ));
+    wp_die();
+}
+
+/**
  * Initialize plugin
  */
 function questrex_backstoryr_init() {
@@ -257,6 +329,10 @@ function questrex_backstoryr_init() {
     add_action('wp_enqueue_scripts', 'questrex_backstoryr_enqueue_assets');
     add_action('admin_menu', 'questrex_backstoryr_add_admin_menu');
     add_action('admin_init', 'questrex_backstoryr_settings_init');
+    
+    // Add AJAX endpoints
+    add_action('wp_ajax_questrex_backstoryr_generate', 'questrex_backstoryr_generate_backstory');
+    add_action('wp_ajax_nopriv_questrex_backstoryr_generate', 'questrex_backstoryr_generate_backstory');
 }
 
 // Initialize
