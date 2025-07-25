@@ -106,7 +106,7 @@ Center the narrative on the history, dynamically selecting an appropriate verb (
     <div className="backstoryr-container">
       {isLoading && <LoadingOverlay />}
       <h1 className="h1">
-        QuestRex <span className="h1__sub">Backstoryr</span>
+        QuestRex <span className="h1__sub">Backstoryr</span> v1.0
       </h1>
       <p className="backstoryr-introduction">
         Who the heck is your character? Tweak the options below for an
